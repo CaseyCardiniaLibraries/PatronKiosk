@@ -19,6 +19,6 @@ RFID Pad - With all of our assets on RFID we make use of these pads to speed of 
 
 Self-Checkout System - At present we are making use of FE's software at a cost of $2,000 up fornt per licence and $200 per annum per licence. This is a bespoke piece of software installed and configured on the computer, which we then use Windows 10 limiting to lock down access specifically to this software.
 
-OPAC - We are presently using SirsiDynix Enterprise as our catalogue system. As this is web-based we use the Windows 10 limiting function to lock down to Mozilla Firefox and then restrict website access to this sub-domain.
+OPAC - We are presently using SirsiDynix Enterprise as our catalogue system. As this is web-based we use the Windows 10 limiting function to lock down to Google Chrome - for its full screen 'kiosk' mode - and then restrict website access to this sub-domain.
 
-Computer Reservation - We are presently using MyReservation as our public PC booking system. As this is web-based we use the Windows 10 limiting function to lock down to Mozilla Firefox and then restrict website access to this sub-domain.
+Computer Reservation - We are presently using MyReservation as our public PC booking system. As this is web-based we use the Windows 10 limiting function to lock down to Internet Explorer - for its full screen 'kiosk' mode and software dependancies - and then restrict website access to this sub-domain.
