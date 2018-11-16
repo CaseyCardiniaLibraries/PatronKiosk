@@ -1,0 +1,12 @@
+C:\Users\lucas.baker\source\repos\CCLKiosk\CCLKiosk\bin\Debug\MultiAppKiosk.exe.config
+C:\Users\lucas.baker\source\repos\CCLKiosk\CCLKiosk\bin\Debug\MultiAppKiosk.exe
+C:\Users\lucas.baker\source\repos\CCLKiosk\CCLKiosk\bin\Debug\MultiAppKiosk.pdb
+C:\Users\lucas.baker\source\repos\CCLKiosk\CCLKiosk\obj\Debug\MultiAppKiosk.csprojAssemblyReference.cache
+C:\Users\lucas.baker\source\repos\CCLKiosk\CCLKiosk\obj\Debug\CCLKiosk.HomeForm.resources
+C:\Users\lucas.baker\source\repos\CCLKiosk\CCLKiosk\obj\Debug\CCLKiosk.OverlayForm.resources
+C:\Users\lucas.baker\source\repos\CCLKiosk\CCLKiosk\obj\Debug\CCLKiosk.DialogueForm.resources
+C:\Users\lucas.baker\source\repos\CCLKiosk\CCLKiosk\obj\Debug\MultiAppKiosk.Properties.Resources.resources
+C:\Users\lucas.baker\source\repos\CCLKiosk\CCLKiosk\obj\Debug\MultiAppKiosk.csproj.GenerateResource.cache
+C:\Users\lucas.baker\source\repos\CCLKiosk\CCLKiosk\obj\Debug\MultiAppKiosk.csproj.CoreCompileInputs.cache
+C:\Users\lucas.baker\source\repos\CCLKiosk\CCLKiosk\obj\Debug\MultiAppKiosk.exe
+C:\Users\lucas.baker\source\repos\CCLKiosk\CCLKiosk\obj\Debug\MultiAppKiosk.pdb
