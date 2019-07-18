@@ -53,7 +53,7 @@ namespace CCLKiosk
             //place on top of windows
             DIALOGUEFORM.TopMost = true;
             //start countdown
-            timer1.Start();
+            timeOut.Start();
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -80,7 +80,7 @@ namespace CCLKiosk
                 timeLeft -= 1;
                 countdownLabel.Text = timeLeft + " seconds";
             }
-            else timer1.Stop();
+            else timeOut.Stop();
         }
         #endregion
     }

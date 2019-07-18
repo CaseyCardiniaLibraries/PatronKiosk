@@ -23,7 +23,7 @@ namespace CCLKiosk
         private const int def_timeoutWidth = 600;
         private const int def_timeoutHeight = 300;
         private const int def_timeoutFontSize = 14;
-        private static readonly ButtonConfig[] def_appButtonsConfig = new ButtonConfig[3] { new ButtonConfig("None", " ", 20, "Black", "None"), new ButtonConfig("None", " ", 20, "Black", "None"), new ButtonConfig("None", " ", 20, "Black", "None") };
+        private static readonly ButtonConfig[] def_appButtonsConfig = new ButtonConfig[3] { new ButtonConfig("None", " ", 20, "Black"), new ButtonConfig("None", " ", 20, "Black"), new ButtonConfig("None", " ", 20, "Black") };
         private static readonly HomeConfig def_homeButtonConfig = new HomeConfig("Default.png", "", 14, "Black", 64, 64, 10, 10, "TOPRIGHT");
         #endregion
 
@@ -108,7 +108,8 @@ namespace CCLKiosk
             public string buttonText;
             public int fontSize;
             public string textColor;
-            public string appProcName;
+            public ProcArg option;
+            public ProcArg[] subOptions;
 
             public ButtonConfig() { }
 
@@ -118,16 +119,52 @@ namespace CCLKiosk
                 buttonText = setText;
                 fontSize = setSize;
                 textColor = setColor;
-                appProcName = "None";
             }
 
-            public ButtonConfig(string setImageName, string setText, int setSize, string setColor, string setProcName)
+            public ButtonConfig(string setImageName, string setText, int setSize, string setColor, ProcArg setOption)
             {
                 backgroundImageName = setImageName;
                 buttonText = setText;
                 fontSize = setSize;
                 textColor = setColor;
-                appProcName = setProcName;
+                option = setOption;
+            }
+
+            public ButtonConfig(string setImageName, string setText, int setSize, string setColor, ProcArg setOption, ProcArg[] setSubOptions)
+            {
+                backgroundImageName = setImageName;
+                buttonText = setText;
+                fontSize = setSize;
+                textColor = setColor;
+                option = setOption;
+                subOptions = setSubOptions;
+            }
+        }
+
+        public class ProcArg
+        {
+            public string appProcName;
+            public string arguments;
+            public string text;
+
+            public ProcArg() { }
+
+            public ProcArg(string setName)
+            {
+                appProcName = setName;
+            }
+
+            public ProcArg(string setName, string setArgs)
+            {
+                appProcName = setName;
+                arguments = setArgs;
+            }
+
+            public ProcArg(string setName, string setArgs, string setText)
+            {
+                appProcName = setName;
+                arguments = setArgs;
+                text = setText;
             }
         }
 

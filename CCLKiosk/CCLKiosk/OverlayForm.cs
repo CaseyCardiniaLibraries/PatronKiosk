@@ -3,8 +3,6 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using static CCLKiosk.Configuration;
 
@@ -19,8 +17,7 @@ namespace CCLKiosk
         DialogueForm DIALOGUEFORM;
 
         //idle timer objects
-        Task homeTask;
-        CancellationTokenSource source = new CancellationTokenSource();
+        int countTime;
         const int IDLEINTERVAL = 5;
         int TIMEOUT;
         int MAXIDLE;
@@ -30,13 +27,8 @@ namespace CCLKiosk
         #endregion
 
         #region Initialisation
-        //keyboard detection
-        KeyboardHook kh = new KeyboardHook();
-        private IntPtr _hookID = IntPtr.Zero;
-
-        //mouse detection
-        private LowLevelMouseProc _proc;
-        private const int WH_MOUSE_LL = 14;
+        LASTINPUTINFO lastInPut = new LASTINPUTINFO();
+        private uint inputCheck = 0;
 
         public OverlayForm(HomeForm parent)
         {
@@ -68,15 +60,14 @@ namespace CCLKiosk
             //timeout config
             TIMEOUT = HOMEFORM.CONFIG_FILE.timeoutTime;
             MAXIDLE = HOMEFORM.CONFIG_FILE.idleTimeout/IDLEINTERVAL;
-
-            //set idle check hooks
-            _proc = HookCallback;
-            kh.KeyDown += Kh_KeyDown;
-            _hookID = SetHook(_proc);
         }
 
         private void OverlayForm_Load(object sender, EventArgs e)
         {
+            lastInPut.cbSize = (uint)System.Runtime.InteropServices.Marshal.SizeOf(lastInPut);
+            GetLastInputInfo(ref lastInPut);
+            inputCheck = lastInPut.dwTime;
+
             //make the home button overlay
             OVERLAYFORM.TopMost = true;
         }
@@ -103,38 +94,32 @@ namespace CCLKiosk
         #endregion
 
         #region Timer
-        private async void ScheduleAction(Action action, DateTime ExecutionTime)
+        private void TimerIdle_Tick(object sender, EventArgs e)
         {
-            //create idle timer task
-            homeTask = Task.Delay((int)ExecutionTime.Subtract(DateTime.Now).TotalMilliseconds, source.Token);
-
-            //wait for idle timer
-            try { await homeTask; }
-            catch { return; }
-
-            action();
+            //countdown
+            if (countTime > 0) countTime--;
+            else CheckHome();
         }
 
         //set idle timer
-        public void SetTimer()
+        public void SetIdleTimer()
         {
-            if (dialogueUp) ScheduleAction(CheckHome, DateTime.Now.AddSeconds(TIMEOUT));
-            else ScheduleAction(CheckHome, DateTime.Now.AddSeconds(IDLEINTERVAL));
+            if (dialogueUp) countTime = TIMEOUT;
+            else countTime = IDLEINTERVAL;
+            timerIdle.Start();
         }
 
-        private void CancelTimer()
+        private void CancelIdleTimer()
         {
+            timerIdle.Stop();
             idleCount = 0;
-            source.Cancel();
-            source.Dispose();
-            source = new CancellationTokenSource();
         }
 
         private void HomeDialogue()
         {
             dialogueUp = true;
             DIALOGUEFORM = new DialogueForm(OVERLAYFORM, HOMEFORM, HOMEFORM.CONFIG_FILE.themeColour, TIMEOUT) { Visible = true };
-            SetTimer();
+            SetIdleTimer();
         }
         #endregion
 
@@ -144,24 +129,33 @@ namespace CCLKiosk
 
         public void ContinueSession()
         {
-            CancelTimer();
+            CancelIdleTimer();
             dialogueUp = false;
-            SetTimer();
+            SetIdleTimer();
         }
 
         //return to home screen
         private void GoHome()
         {
             dialogueUp = false;
-            CancelTimer();
+            CancelIdleTimer();
             HOMEFORM.Visible = true;
+            HOMEFORM.ShowMain();
             OVERLAYFORM.Visible = false;
         }
 
         private void CheckHome()
         {
+            GetLastInputInfo(ref lastInPut);
+            if(inputCheck != lastInPut.dwTime)
+            {
+                idleReset = true;
+            }
+
+            inputCheck = lastInPut.dwTime;
+
             //check if timeout
-            if(dialogueUp)
+            if (dialogueUp)
             {
                 DIALOGUEFORM.Dispose();
                 DIALOGUEFORM.Close();
@@ -178,61 +172,30 @@ namespace CCLKiosk
             if (!idleReset && idleCount != MAXIDLE-1)
             {
                 idleCount += 1;
-                SetTimer();
+                SetIdleTimer();
                 return;
             }
             //reset timer
             if(idleReset)
             {
                 idleCount = 0;
-                SetTimer();
+                SetIdleTimer();
                 idleReset = false;
             }
         }
         #endregion
 
         #region Hooks
-        private void Kh_KeyDown(Keys key) { idleReset = true; }
+        [DllImport("User32.dll")]
+        private static extern bool
+        GetLastInputInfo(ref LASTINPUTINFO plii);
 
-        private IntPtr SetHook(LowLevelMouseProc proc)
+        internal struct LASTINPUTINFO
         {
-            using (Process curProcess = Process.GetCurrentProcess())
+            public uint cbSize;
 
-            using (ProcessModule curModule = curProcess.MainModule) return SetWindowsHookEx(WH_MOUSE_LL, proc, GetModuleHandle(curModule.ModuleName), 0);
+            public uint dwTime;
         }
-
-        private delegate IntPtr LowLevelMouseProc(int nCode, IntPtr wParam, IntPtr lParam);
-
-        private IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
-        {
-            bool v = (MouseMessages.WM_LBUTTONDOWN == (MouseMessages)wParam || MouseMessages.WM_LBUTTONUP == (MouseMessages)wParam || MouseMessages.WM_RBUTTONDOWN == (MouseMessages)wParam || MouseMessages.WM_RBUTTONUP == (MouseMessages)wParam || MouseMessages.WM_MOUSEMOVE == (MouseMessages)wParam || MouseMessages.WM_MOUSEWHEEL == (MouseMessages)wParam );
-            if (nCode >= 0 && v) idleReset = true;
-
-            return CallNextHookEx(_hookID, nCode, wParam, lParam);
-        }
-
-        private enum MouseMessages
-        {
-            WM_LBUTTONDOWN = 0x0201,
-            WM_LBUTTONUP = 0x0202,
-            WM_MOUSEMOVE = 0x0200,
-            WM_MOUSEWHEEL = 0x020A,
-            WM_RBUTTONDOWN = 0x0204,
-            WM_RBUTTONUP = 0x0205
-        }
-
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        private static extern IntPtr SetWindowsHookEx(int idHook, LowLevelMouseProc lpfn, IntPtr hMod, uint dwThreadId);
-
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool UnhookWindowsHookEx(IntPtr hhk);
-
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        private static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, IntPtr wParam, IntPtr lParam);
-
-        [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        private static extern IntPtr GetModuleHandle(string lpModuleName);
         #endregion
     }
 }
