@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<ConfigurationData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <themeColour>White</themeColour>
+  <resourceFolder>C:\Users\lucas.baker\source\repos\CCLKiosk\CCLKiosk\bin\Debug\ResourceFiles</resourceFolder>
+  <mainBGImage>CCL.png</mainBGImage>
+  <screensaverImgs>
+	<string>SS1.jpg</string>
+	<string>SS2.jpg</string>
+	<string>SS3.jpg</string>
+  </screensaverImgs>
+  <numOfButtons>3</numOfButtons>
+  <buttonWidth>480</buttonWidth>
+  <buttonHeight>480</buttonHeight>
+  <mainRows>1</mainRows>
+  <mainPaddingTop>0</mainPaddingTop>
+  <mainPaddingRight>0</mainPaddingRight>
+  <mainPaddingBottom>0</mainPaddingBottom>
+  <mainPaddingLeft>0</mainPaddingLeft>
+  <idleTimeout>10</idleTimeout>
+  <timeoutTime>10</timeoutTime>
+  <timeoutText>Due to inactivity, you will be returned to the Home Screen in:</timeoutText>
+  <timeoutWidth>600</timeoutWidth>
+  <timeoutHeight>300</timeoutHeight>
+  <timeoutFontSize>14</timeoutFontSize>
+  <appButtonsConfig>
+    <ButtonConfig>
+      <backgroundImageName>Blue.png</backgroundImageName>
+      <buttonText>Borrow an Item</buttonText>
+	  <fontSize>30</fontSize>
+      <textColor>White</textColor>
+	  <option>
+		<appProcName>Teams</appProcName>
+	  </option>
+    </ButtonConfig>
+    <ButtonConfig>
+      <backgroundImageName>Purple.png</backgroundImageName>
+      <buttonText>Catalogue</buttonText>
+	  <fontSize>30</fontSize>
+      <textColor>White</textColor>
+	  <option>
+		<appProcName>embededBrowser</appProcName>
+		<arguments>https://cclc.swft.ent.sirsidynix.net.au/client/en_AU/cclcopac/</arguments>
+	  </option>
+    </ButtonConfig>
+    <ButtonConfig>
+      <backgroundImageName>Green.png</backgroundImageName>
+      <buttonText>Reserve a PC</buttonText>
+	  <fontSize>30</fontSize>
+      <textColor>White</textColor>
+	  <option>
+		<appProcName>embededBrowser</appProcName>
+		<arguments>computers.ccl.vic.gov.au/computerreservation</arguments>
+	  </option>
+    </ButtonConfig>
+  </appButtonsConfig>
+  <homeButtonConfig>
+    <backgroundImageName>Default.png</backgroundImageName>
+    <buttonText>HOME</buttonText>
+    <textColor>White</textColor>
+	<fontSize>14</fontSize>
+    <buttonWidth>64</buttonWidth>
+	<buttonHeight>64</buttonHeight>
+    <buttonPaddingVertical>10</buttonPaddingVertical>
+	<buttonPaddingHorizontal>10</buttonPaddingHorizontal>
+    <buttonPosition>TOPRIGHT</buttonPosition>
+  </homeButtonConfig>
+</ConfigurationData>
