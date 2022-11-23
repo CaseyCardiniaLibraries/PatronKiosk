@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<ConfigurationData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <themeColour>White</themeColour>
+  <resourceFolder>C:\Users\ENTERPATH\KioskFiles\ResourceFiles</resourceFolder>
+  <mainBGImage>BGImage.png</mainBGImage>
+  <screensaverImgs>
+	<string>ScreenSaver1.jpg</string>
+	<string>ScreenSaver2.jpg</string>
+	<string>ScreenSaver3.jpg</string>
+  </screensaverImgs>
+  <numOfButtons>3</numOfButtons>
+  <buttonWidth>480</buttonWidth>
+  <buttonHeight>480</buttonHeight>
+  <mainRows>3</mainRows>
+  <mainPaddingTop>0</mainPaddingTop>
+  <mainPaddingRight>0</mainPaddingRight>
+  <mainPaddingBottom>0</mainPaddingBottom>
+  <mainPaddingLeft>0</mainPaddingLeft>
+  <idleTimeout>90</idleTimeout>
+  <timeoutTime>10</timeoutTime>
+  <timeoutText>Due to inactivity, you will be returned to the Home Screen in:</timeoutText>
+  <timeoutWidth>600</timeoutWidth>
+  <timeoutHeight>300</timeoutHeight>
+  <timeoutFontSize>14</timeoutFontSize>
+  <appButtonsConfig>
+    <ButtonConfig>
+      <backgroundImageName>Button1.png</backgroundImageName>
+      <buttonText>CATALOGUE</buttonText>
+	  <fontSize>36</fontSize>
+      <textColor>White</textColor>
+	  <option>
+		<appProcName>embededBrowser</appProcName>
+		<arguments>https://thisisnotarealcatalogue.com</arguments>
+	  </option>
+    </ButtonConfig>
+    <ButtonConfig>
+      <backgroundImageName>Button2.png</backgroundImageName>
+      <buttonText>DO SOMETHING</buttonText>
+	  <fontSize>36</fontSize>
+      <textColor>White</textColor>
+	  <option>
+		<appProcName>embededBrowser</appProcName>
+		<arguments>google.com.au</arguments>
+	  </option>
+    </ButtonConfig>
+    <ButtonConfig>
+      <backgroundImageName>Button3.png</backgroundImageName>
+      <buttonText>BORROW AN ITEM</buttonText>
+	  <fontSize>36</fontSize>
+      <textColor>White</textColor>
+	  <option>
+		<appProcName>SelfCheckProcessName</appProcName>
+	  </option>
+    </ButtonConfig>
+  </appButtonsConfig>
+  <homeButtonConfig>
+    <backgroundImageName>HomeButton.png</backgroundImageName>
+    <buttonText>HOME</buttonText>
+    <textColor>White</textColor>
+	<fontSize>14</fontSize>
+    <buttonWidth>64</buttonWidth>
+	<buttonHeight>64</buttonHeight>
+    <buttonPaddingVertical>10</buttonPaddingVertical>
+	<buttonPaddingHorizontal>10</buttonPaddingHorizontal>
+    <buttonPosition>TOPRIGHT</buttonPosition>
+  </homeButtonConfig>
+</ConfigurationData>
