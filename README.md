@@ -119,9 +119,9 @@ The script below checks runs on login. It checks the share for the ‘registered
 
 >ECHO off<br>
 ><br>
->SET configpath=\\SERVER\SHARE\FOLDERPATH OF REGISTEDKIOSKS.TXT\<br>
+>SET configpath=\\SERVER\SHARE\FOLDERPATH OF REGISTEDKIOSKS.TXT<br>
 >SET configfilename=registeredkiosks.txt<br>
->SET templatepath=\\SERVER\SHARE\FOLDERPATH OF TEMPLATE FOLDERS\<br>
+>SET templatepath=\\SERVER\SHARE\FOLDERPATH OF TEMPLATE FOLDERS<br>
 ><br>
 >SET /A k=0<br>
 >SET found[0]=zero<br>
